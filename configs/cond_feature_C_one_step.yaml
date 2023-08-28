@@ -1,0 +1,89 @@
+model:
+  base_learning_rate: 4.5e-06
+  target: taming.models.cond_transformer.DenoiseTransformer_bev
+  params:
+    out_loss_w: 200
+    pkeep: 0.0
+    is_train: None
+    cond_stage_key: nos
+    config_filename: "bev_lib/configs/nuscenes/seg/camera-bev256d2.yaml"
+    transformer_config:
+      target: taming.modules.transformer.mingpt.GPT_bev
+      params:
+        vocab_size: 1024
+        block_size: 512
+        n_layer: 24
+        n_head: 16
+        n_embd: 1024
+        feature_ch: 80
+    first_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: pretrained_models/autoencoder/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        ddconfig:
+          double_z: False
+          z_channels: 256
+          resolution: 256
+          in_channels: 6
+          out_ch: 6
+          ch: 128
+          ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
+          num_res_blocks: 2
+          attn_resolutions: [12]
+          dropout: 0.0
+          cross_entropy: False
+
+        lossconfig:
+          target: taming.modules.losses.vqperceptual.VQLPIPSWithDiscriminator
+          params:
+            disc_conditional: False
+            disc_in_channels: 6
+            disc_start: 10000
+            disc_weight: 0.8
+            codebook_weight: 0.001
+            perceptual_weight: 0
+            cross_entropy: False
+
+    cond_stage_config:
+      target: taming.models.vqgan.VQModel
+      params:
+        ckpt_path: pretrained_models/autoencoder/checkpoints/last.ckpt
+        embed_dim: 256
+        n_embed: 1024
+        ddconfig:
+          double_z: False
+          z_channels: 256
+          resolution: 256
+          in_channels: 6
+          out_ch: 6
+          ch: 128
+          ch_mult: [ 1,1,2,2,4]  # num_down = len(ch_mult)-1
+          num_res_blocks: 2
+          attn_resolutions: [12]
+          dropout: 0.0
+          cross_entropy: False
+
+        lossconfig:
+          target: taming.modules.losses.vqperceptual.VQLPIPSWithDiscriminator
+          params:
+            disc_conditional: False
+            disc_in_channels: 6
+            disc_start: 10000
+            disc_weight: 0.8
+            codebook_weight: 1.0
+            perceptual_weight: 0
+            cross_entropy: False
+
+
+
+data:
+  target: transformer.DataModuleFromConfig_bev
+  params:
+
+    config_name: "bev_lib/configs/nuscenes/seg/camera-bev256d2.yaml"
+    train: None
+     
+    validation: None
+      
