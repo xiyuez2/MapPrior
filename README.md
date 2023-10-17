@@ -1,8 +1,8 @@
 # MapPrior 
 ##### ICCV 2023
 
-[**MapPrior: Bird’s-Eye View Map Layout Estimation with Generative Models**](https://link.to.paper/)<br/>
-[Xiyue Zhu](https://link.to.paper/),
+[**MapPrior: Bird’s-Eye View Map Layout Estimation with Generative Models**](https://arxiv.org/abs/2308.12963/)<br/>
+[Xiyue Zhu](https://arxiv.org/abs/2308.12963),
 [Vlas Zyrianov](https://www.zyrianov.org/),
 [Zhijian Liu](https://zhijianliu.com/),
 [Shenlong Wang](https://shenlong.web.illinois.edu/) <br/>
@@ -10,7 +10,7 @@
 **tl;dr** MapPrior is a novel BEV perception framework that combines a traditional discriminative BEV perception model with a learned generative model for semantic map layouts. It delivers predictions with better accuracy, realism and uncertainty awareness than its baselines.
 
 ![teaser](assets/teaser.png)
-[Paper](https://link.to.paper) | [BibTeX](#bibtex) | [Project Page](https://links.to.project/)
+[Paper](https://arxiv.org/abs/2308.12963) | [BibTeX](#bibtex) | [Project Page](https://mapprior.github.io/)
 
 
 ## Overview of pretrained models
